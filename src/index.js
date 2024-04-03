@@ -2,11 +2,25 @@ import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import autoAnimate from '@formkit/auto-animate';
+import { useEffect, useRef } from 'react';
+import { Button, Navbar, Container } from 'react-bootstrap';
+
+import ImgX from './images/icon-cross.svg';
+import ImgCheckbox from './images/icon-check.svg';
 
 const MainSite = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
   const [filterType, setFilterType] = useState('all');
+  const [darkMode, setDarkMode] = useState(false);
+  const parentRef = useRef(null);
+
+  useEffect(() => {
+    if (parentRef.current) {
+      autoAnimate(parentRef.current);   
+    }
+  }, [parentRef]);
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -48,38 +62,49 @@ const MainSite = () => {
     setTodos((prevTodos) => prevTodos.filter((todo) => !todo.completed));
   };
 
+  const handleDarkModeCheckbox = () => {
+    setDarkMode((prevIsDark) => !prevIsDark);
+  };
+
   return (
-    <main>
-      <header>
-        <h1>Todo</h1>
-        <input type='checkbox' />
+    <main className={`cs-bg-${darkMode ? 'dark' : 'light'} d-flex flex-column align-items-center justify-items-center`}>
+      <header className='container d-flex flex-row align-items-center justify-content-between'>
+        <h1 className='h1 text-uppercase text-white fw-bold'>Todo</h1>
+        <input className='form-check-input' type='checkbox' value="" id='customCheckbox' onClick={handleDarkModeCheckbox} />
       </header>
-      <section>
-        <input type='checkbox' />
-        <input type='text' 
+      <section className='container p-3 m-3 d-flex flex-row align-items-center justify-content-between bg-white rounded'>
+        <div className='spinner-border text-muted'></div>
+        <input className='container no-border' type='text' 
                placeholder='Create a new todo...'
                value={newTodo}
                onChange={(e) => setNewTodo(e.target.value)}
                onKeyDown={handleKeyDown} />
       </section>
-      <section>
-        <div>
+      <section id='s2' className='container d-flex flex-column bg-white shadow-sm bg-body rounded'>
+        <div ref={parentRef} className='container-flued d-flex flex-column'>
           {fileredTodos.map((todo, index) => (
-            <div key={index}>
-              <input type='checkbox'
-                     checked={todo.completed}
-                     onChange={() => handleToggleTodo(index)} />
-              <p>{todo.text}</p>
-              <button onClick={() => handleDeleteTodo(index)}>X</button>
+            <div className='container p-2 borderBottom d-flex flex-row align-items-center justify-content-between' key={index}>
+              <div class="form-check">
+                <input className='form-check-input'
+                      id="customCheckbox2"
+                      type='checkbox'
+                      checked={todo.completed}
+                      onChange={() => handleToggleTodo(index)} />
+                <label class="form-check-label" for="customCheckbox2"><img src={ImgCheckbox} /></label>                
+              </div>
+              <p className='container text-start m-0'>{todo.text}</p>
+              <button className='btn' onClick={() => handleDeleteTodo(index)}><img src={ImgX} alt='close' /></button>
             </div>
           ))}
         </div>
-        <div>
-          <p>{fileredTodos.length} item{fileredTodos.length > 1 && 's'} left</p>
-          <a onClick={() => setFilterType('all')}>All</a>
-          <a onClick={() => setFilterType('active')}>Active</a>
-          <a onClick={() => setFilterType('completed')}>Completed</a>
-          <a onClick={handleClearCompleted}>Clear Completed</a>
+        <div id='btmNav' className='container-flued paddingNav d-flex flex-row align-items-center justify-content-between'>
+          <a>{fileredTodos.length} item{fileredTodos.length > 1 && 's'} left</a>
+          <div className='btn-group'>
+            <a className='btn' onClick={() => setFilterType('all')}>All</a>
+            <a className='btn' onClick={() => setFilterType('active')}>Active</a>
+            <a className='btn' onClick={() => setFilterType('completed')}>Completed</a>
+          </div>
+          <a className='btn' onClick={handleClearCompleted}>Clear Completed</a>
         </div>
       </section>
     </main>
