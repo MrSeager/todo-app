@@ -37,6 +37,26 @@ header h1{
   letter-spacing: 15px;
 }
 
+.transition-time{
+  transition: .5s;
+}
+
+.cs-s-light{
+  background-color: hsl(0, 0%, 98%);
+}
+
+.cs-s-dark{
+  background-color: hsl(235, 24%, 19%);
+}
+
+.cs-opacity-null{
+  opacity: 0;
+}
+
+.cs-opacity-full{
+  opacity: 100;
+}
+
 .no-border{
   border-style: none;
 }
@@ -70,6 +90,18 @@ header .form-check-input:checked{
   transition: .3s;
 }
 
+.cs-fc-light{
+  color: hsl(235, 19%, 35%);
+}
+
+.cs-fc-dark{
+  color: hsl(234, 39%, 85%);
+}
+
+.cs-fc-crossed{
+  color: hsl(236, 9%, 61%);
+}
+
 #s2 .form-check{
   position: relative;
 }
@@ -79,7 +111,7 @@ header .form-check-input:checked{
   height: 30px;
   border-radius: 50px;
   border: 1px solid hsl(236, 33%, 92%);
-  box-shadow: none !important;
+   -shadow: none !important;
   cursor: pointer;
   transition: .5s;
 }
@@ -119,6 +151,40 @@ header .form-check-input:checked{
   transition: .3s;
 }
 
-#btmNav .btn:hover{
+#btmNav .cs-hover-light:hover{
   color: hsl(235, 19%, 35%);
+}
+
+#btmNav .cs-hover-dark:hover{
+  color: hsl(236, 33%, 92%);
+}
+
+@media (max-width: 500px){
+  main{
+    padding: 5% 5%;
+  }
+
+  .cs-bg-light{
+    background: url('./images/bg-mobile-light.jpg') no-repeat center top / 100%;
+  }
+  
+  .cs-bg-dark{
+    background: url('./images/bg-mobile-dark.jpg') no-repeat center top / 100%;
+    background-color: hsl(235, 21%, 11%);
+  }
+
+  #s2{
+    margin-bottom: 15%;
+  }
+
+  #btmNav{
+    position: relative;
+  }
+
+  #btmNav .btn-group{
+    position: absolute;
+    bottom: -80%;
+    left: -3%;
+    width: 106%;
+  }
 }

@@ -72,39 +72,39 @@ const MainSite = () => {
         <h1 className='h1 text-uppercase text-white fw-bold'>Todo</h1>
         <input className='form-check-input' type='checkbox' value="" id='customCheckbox' onClick={handleDarkModeCheckbox} />
       </header>
-      <section className='container p-3 m-3 d-flex flex-row align-items-center justify-content-between bg-white rounded'>
-        <div className='spinner-border text-muted'></div>
-        <input className='container no-border' type='text' 
+      <section id='s1' className={`cs-s-${darkMode ? 'dark' : 'light'} container p-3 m-3 d-flex flex-row align-items-center justify-content-between rounded transition-time`}>
+        <div className={`${darkMode ? 'text-light' : 'text-secondary'} spinner-border`}></div>
+        <input className={`cs-fc-${darkMode ? 'dark' : 'light'} container no-border bg-transparent transition-time`} type='text' 
                placeholder='Create a new todo...'
                value={newTodo}
                onChange={(e) => setNewTodo(e.target.value)}
                onKeyDown={handleKeyDown} />
       </section>
-      <section id='s2' className='container d-flex flex-column bg-white shadow-sm bg-body rounded'>
+      <section id='s2' className={`cs-s-${darkMode ? 'dark' : 'light'} container d-flex flex-column shadow-lg rounded transition-time`}>
         <div ref={parentRef} className='container-flued d-flex flex-column'>
           {fileredTodos.map((todo, index) => (
             <div className='container p-2 borderBottom d-flex flex-row align-items-center justify-content-between' key={index}>
               <div class="form-check">
-                <input className='form-check-input'
+                <input className='form-check-input bg-transparent'
                       id="customCheckbox2"
                       type='checkbox'
                       checked={todo.completed}
                       onChange={() => handleToggleTodo(index)} />
-                <label class="form-check-label" for="customCheckbox2"><img src={ImgCheckbox} /></label>                
+                <label class={`cs-opacity-${!todo.completed ? 'null' : 'full'} form-check-label`} for="customCheckbox2"><img src={ImgCheckbox} /></label>                
               </div>
-              <p className='container text-start m-0'>{todo.text}</p>
+              <p className={`cs-fc-${darkMode && !todo.completed ? 'dark' : 'light'} ${todo.completed ? 'text-decoration-line-through cs-fc-crossed' : 'none'} container text-start m-0 transition-time`}>{todo.text}</p>
               <button className='btn' onClick={() => handleDeleteTodo(index)}><img src={ImgX} alt='close' /></button>
             </div>
           ))}
         </div>
         <div id='btmNav' className='container-flued paddingNav d-flex flex-row align-items-center justify-content-between'>
           <a>{fileredTodos.length} item{fileredTodos.length > 1 && 's'} left</a>
-          <div className='btn-group'>
-            <a className='btn' onClick={() => setFilterType('all')}>All</a>
-            <a className='btn' onClick={() => setFilterType('active')}>Active</a>
-            <a className='btn' onClick={() => setFilterType('completed')}>Completed</a>
+          <div className={`cs-s-${darkMode ? 'dark' : 'light'} btn-group transition-time`}>
+            <a className={`btn cs-hover-${darkMode ? 'dark' : 'light'}`} onClick={() => setFilterType('all')}>All</a>
+            <a className={`btn cs-hover-${darkMode ? 'dark' : 'light'}`} onClick={() => setFilterType('active')}>Active</a>
+            <a className={`btn cs-hover-${darkMode ? 'dark' : 'light'}`} onClick={() => setFilterType('completed')}>Completed</a>
           </div>
-          <a className='btn' onClick={handleClearCompleted}>Clear Completed</a>
+          <a className={`btn cs-hover-${darkMode ? 'dark' : 'light'}`} onClick={handleClearCompleted}>Clear Completed</a>
         </div>
       </section>
     </main>
